@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:rssreader="http://schemas.android.com/apk/res-auto"
+    tools:context="com.romanostrechlis.project.MainActivity" >
+    
+    <item
+        android:id="@+id/add_rssFeed"
+        android:orderInCategory="101"
+        android:showAsAction="never"
+        android:title="@string/new_feed" />
+    
+    <item
+        android:id="@+id/manage_rss"
+        android:orderInCategory="102"
+        android:showAsAction="never"
+        android:title="@string/manage_rss" />
+    
+    <item 
+        android:id="@+id/update" 
+        android:title="@string/update" 
+        android:visible="true" 
+        android:icon="@drawable/ic_action_refresh" 
+        android:showAsAction="ifRoom" />
+    
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="103"
+        android:showAsAction="never"
+        android:title="@string/action_settings" />
+    
+
+</menu>

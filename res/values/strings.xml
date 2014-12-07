@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">RSS News</string>
+    <string name="title_node_detail">Node Detail</string>
+    <string name="action_settings">Settings</string>
+    <string name="new_feed">Add New RSS Feed</string>
+    <string name="manage_rss">Manage RSS Feeds</string>
+    <string name="update">Update</string>
+
+</resources>
