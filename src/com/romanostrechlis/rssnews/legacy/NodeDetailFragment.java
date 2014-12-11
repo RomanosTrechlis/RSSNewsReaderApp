@@ -34,6 +34,7 @@ import com.romanostrechlis.rssnews.content.RssItem;
  * contained in a {@link NodeListActivity} in two-pane mode (on tablets) or a
  * {@link NodeDetailActivity} on handsets.
  * 
+ * @deprecated
  * @author.comment This is auto-generated code from eclipse 
  * master/detail design pattern
  */

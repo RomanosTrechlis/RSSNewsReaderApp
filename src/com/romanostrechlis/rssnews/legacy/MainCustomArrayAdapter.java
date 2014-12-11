@@ -17,6 +17,9 @@ import com.romanostrechlis.rssnews.content.RssFeed;
 
 /**
  * Manages the appearance of {@link ListView} in NodeListActivity.
+ * 
+ * @author Romanos Trechlis
+ * @deprecated
  */
 public class MainCustomArrayAdapter extends ArrayAdapter<RssFeed> {
 

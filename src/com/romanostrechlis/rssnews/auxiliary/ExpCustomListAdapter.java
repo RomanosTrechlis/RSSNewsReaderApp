@@ -16,6 +16,12 @@ import android.widget.TextView;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.content.RssFeed;
 
+/**
+ * Custom BaseExpandableListAdapter for the creation of the List in MainActivity.
+ * 
+ * @author Romanos Trechlis
+ *
+ */
 public class ExpCustomListAdapter extends BaseExpandableListAdapter {
 
 	private List<String> parentItems;

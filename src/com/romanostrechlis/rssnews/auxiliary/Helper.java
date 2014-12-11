@@ -29,8 +29,9 @@ import com.romanostrechlis.rssnews.content.RssItem;
  * <p><h3>Methods Implemented</h3>
  * <ul>
  * <li>{@link #addItemFeed(RssFeed)}: add a new RssFeed to the database.</li>
- * <li>{@link #readRSS(DatabaseHandler, AssetManager)}: gets a list of all RssFeed objects with enabled equal to true.</li>
+ * <li>{@link #createDB(DatabaseHandler, AssetManager, Context)}: populates database based on the json elements inside assets folder.</li>
  * <li>{@link #readRSSAll(DatabaseHandler)}: gets a list with all RssFeed objects in database.</li>
+ * <li>{@link $makeUpdateList(List): populates the {@link #ITEMS} List for update purposes.</li>
  * <li>{@link #downloadContent(DatabaseHandler)}: downloads the content from the web and parse it into RssItem objects.</li>
  * <li>{@link #isConnected(Activity)}: checks whether application has Internet connection.</li>
  * </ul>
@@ -84,6 +85,13 @@ public class Helper {
 		// Log.d(LOGCAT, "ITEMS_TOTAL size: " + String.valueOf(Helper.ITEMS_TOTAL.size()));
 	}
 
+	/**
+	 * Populates database based on the json elements inside assets folder
+	 * 
+	 * @param db
+	 * @param assetManager
+	 * @param context
+	 */
 	public static void createDB(DatabaseHandler db, AssetManager assetManager, Context context) {
 		JSONObject json;
 		RssFeed feed;
@@ -120,6 +128,11 @@ public class Helper {
 		}
 	}
 
+	/**
+	 * Populates the {@link #ITEMS} List for update purposes.
+	 * 
+	 * @param list
+	 */
 	public static void makeUpdateList(List<RssFeed> list) {
 		// Taking the enabled RssFeed from the database and append them to Content.ITEMS
 		for (RssFeed mFeed : list) {

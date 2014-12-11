@@ -23,6 +23,12 @@ import com.romanostrechlis.rssnews.managefeeds.ManageActivity;
 import com.romanostrechlis.rssnews.managefeeds.NewFeedsActivity;
 import com.romanostrechlis.rssnews.settings.SettingsActivity;
 
+/**
+ * List of RSS feeds grouped by category using expandable list view.
+ * 
+ * @author Romanos Trechlis
+ *
+ */
 public class MainActivity extends Activity {
 	
 	private static final String TAG = "MainActivity";
@@ -36,7 +42,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Log.d(TAG, "onCreate");
+		// Log.d(TAG, "onCreate");
 		db = DatabaseHandler.getInstance(this);
 		
 		expListView = (ExpandableListView)findViewById(R.id.expListView);
@@ -57,10 +63,10 @@ public class MainActivity extends Activity {
 		}
 
 		// correct implementation with service
-		Log.d(TAG, "Service isRunning: " + UpdateService.isRunning());
+		// Log.d(TAG, "Service isRunning: " + UpdateService.isRunning());
 		if (!UpdateService.isRunning()) {
 			Intent startService = new Intent(this, UpdateService.class);
-			Log.d(TAG, "Starting Service");
+			// Log.d(TAG, "Starting Service");
 			this.startService(startService);
 		}
 		
@@ -74,7 +80,7 @@ public class MainActivity extends Activity {
 			public boolean onChildClick(ExpandableListView parent, View v,
 					int groupPosition, int childPosition, long id) {
 				RssFeed feed = (RssFeed)adapter.getChild(groupPosition, childPosition);
-				Log.d(TAG, feed.getName());
+				// Log.d(TAG, feed.getName());
 				//RssFeed feed = (RssFeed)parent.getAdapter().getItem(childPosition);//getChild(groupPosition, childPosition);
 				Intent intent = new Intent(MainActivity.this, DetailActivity.class);
 				intent.putExtra("feedId", feed.getId());
@@ -88,7 +94,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Log.d(TAG, "onResume");
+		// Log.d(TAG, "onResume");
 		setGroupParents();
 		setChildData();
 		adapter.notifyDataSetChanged();
@@ -96,7 +102,7 @@ public class MainActivity extends Activity {
 	
 	private void setGroupParents() {
 		listParents = db.getCategories();
-		Log.d(TAG, listParents.toString());
+		// Log.d(TAG, listParents.toString());
 	}
 	
 	private void setChildData() {

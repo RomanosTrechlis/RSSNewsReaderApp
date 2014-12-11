@@ -17,6 +17,7 @@ import com.romanostrechlis.rssnews.auxiliary.Helper;
  * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  * 
+ * @deprecated
  * @author.comment This is auto-generated code from eclipse master/detail design pattern
  */
 public class NodeListFragment extends ListFragment {

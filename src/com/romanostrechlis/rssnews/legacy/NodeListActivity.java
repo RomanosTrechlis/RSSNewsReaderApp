@@ -37,6 +37,7 @@ import com.romanostrechlis.rssnews.settings.SettingsActivity;
  * This activity also implements the required {@link NodeListFragment.Callbacks}
  * interface to listen for item selections.
  * 
+ * @deprecated
  * @author.comment This is auto-generated code from eclipse master/detail design pattern
  */
 public class NodeListActivity extends Activity implements

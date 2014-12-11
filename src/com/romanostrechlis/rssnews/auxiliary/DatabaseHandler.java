@@ -31,6 +31,8 @@ import android.util.Log;
  * <li>{@link #getRssFeedCount()}: Returns the number of RssFeed objects stored in database.</li>
  * <li>{@link #getInstance(Context)}: Returns an instance of DatabaseHandler.</li>
  * <li>{@link #getFeedItems(int)}: Returns all RssItem objects with given parent id.</li>
+ * <li>{@link #getEnabledByCategory(String)}: Returns a list of RssFeed objects where enabled is true and category is given.</li>
+ * <li>{@link #getCategories()}: Rerurns a list of String with distinct categories.</li>
  * </ul>
  * 
  * @author Romanos Trechlis
@@ -220,6 +222,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 * Gets all RssFeed objects with enabled column equal to true.
 	 * Used by NodeListActivity.
 	 * 
+	 * @deprecated
 	 * @return List 	of RssFeed objects
 	 */
 	public List<RssFeed> getEnabled() {
@@ -255,11 +258,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 		String[] selectionArgs = {category, "true"};
 		Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
-		Log.d(TAG, "db.getByCategory()");
+		// Log.d(TAG, "db.getByCategory()");
 		// looping through all rows and adding to list
 		if (cursor.moveToFirst()) {
 			do {
-				Log.d(TAG, cursor.toString());
+				// Log.d(TAG, cursor.toString());
 				RssFeed feed = new RssFeed(cursor.getString(0), // FEED_ID: Integer
 						cursor.getString(1), 					// NAME
 						cursor.getString(2), 					// URL

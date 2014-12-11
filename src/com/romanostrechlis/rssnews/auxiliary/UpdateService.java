@@ -6,6 +6,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 /**
+ * Custom Service to handle the update process.
  * 
  * @author Romanos Trechlis
  *
@@ -44,7 +45,7 @@ public class UpdateService extends Service {
 	}
 	
 	private void update() {
-		Log.d(TAG, "Service started: " + String.valueOf(Thread.activeCount()));
+		// Log.d(TAG, "Service started: " + String.valueOf(Thread.activeCount()));
 		final DatabaseHandler db = DatabaseHandler.getInstance(this);
 		thread = new Thread() {
 			@Override
@@ -54,7 +55,7 @@ public class UpdateService extends Service {
 				try {
 					while(true) {
 						Helper.downloadContent(db, getApplicationContext());
-						Log.d(TAG, String.valueOf(Thread.activeCount()));
+						// Log.d(TAG, String.valueOf(Thread.activeCount()));
 						Thread.sleep(Helper.INTERVAL);
 					}
 				} catch (InterruptedException e) {

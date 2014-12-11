@@ -18,6 +18,7 @@ import android.view.MenuItem;
  * This activity is mostly just a 'shell' activity containing nothing more than
  * a {@link NodeDetailFragment}.
  * 
+ * @deprecated
  * @author.comment This is auto-generated code from eclipse
  * master/detail design pattern
  */

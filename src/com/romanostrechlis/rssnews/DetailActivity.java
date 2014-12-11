@@ -21,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 /**
+ * Creates the layout for individual RSS items to appear.
  * 
  * @author Romanos Trechlis
  *
