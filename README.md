@@ -55,7 +55,6 @@ Static content is Helper.java and the communication with the servers is facilita
 2. Make main list of feeds redrawn after every update.
 3. Check error handling when url doesn't exists in RSS feeds.
 4. Find why ConcurrentModificationException happened
-5. Better documentation
 
 ## 5. Contact information
 *Romanos Trechlis* @r_trechlis
