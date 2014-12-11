@@ -12,12 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.romanostrechlis.rssnews.NodeListActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
 import com.romanostrechlis.rssnews.auxiliary.ManageCustomArrayAdapter;
 import com.romanostrechlis.rssnews.content.RssFeed;
+import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 
 /**
  * Shows {@link ListView} with all the RssFeed objects in the database,

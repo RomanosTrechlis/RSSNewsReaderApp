@@ -1,4 +1,4 @@
-package com.romanostrechlis.rssnews.auxiliary;
+package com.romanostrechlis.rssnews.legacy;
 
 import java.util.List;
 

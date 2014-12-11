@@ -8,7 +8,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="com.romanostrechlis.rssnews.NodeListActivity" >
+    tools:context="com.romanostrechlis.rssnews.legacy.NodeListActivity" >
 
     <!--
     This layout is a two-pane layout for the Nodes
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/node_list"
-        android:name="com.romanostrechlis.rssnews.NodeListFragment"
+        android:name="com.romanostrechlis.rssnews.legacy.NodeListFragment"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

@@ -1,3 +1,4 @@
-{'id':'1', 'name':'defencenet', 'url':'http://www.defencenet.gr/defence/?q=rss.xml', 'content':'', 'category':'News', 'hashCode':'', 'enabled':'true'}
-{'id':'2', 'name':'secnews', 'url':'http://feeds.feedburner.com/secnewsgr?format=xml', 'content':'', 'category':'News', 'hashCode':'', 'enabled':'true'}
-{'id':'3', 'name':'debka', 'url':'http://debka.com/feeds/latest/', 'category':'News', 'content':'', 'hashCode':'', 'enabled':'true'}
+{'id':'1', 'name':'defencenet.gr', 'url':'http://www.defencenet.gr/defence/?q=rss.xml', 'content':'', 'category':'News', 'hashCode':'', 'enabled':'true'}
+{'id':'2', 'name':'secnews.gr', 'url':'http://feeds.feedburner.com/secnewsgr?format=xml', 'content':'', 'category':'Security News', 'hashCode':'', 'enabled':'true'}
+{'id':'3', 'name':'debka.com', 'url':'http://debka.com/feeds/latest/', 'category':'News', 'content':'', 'hashCode':'', 'enabled':'true'}
+{'id':'4', 'name':'BBC News', 'url':'http://feeds.bbci.co.uk/news/rss.xml', 'category':'News', 'content':'', 'hashCode':'', 'enabled':'true'}

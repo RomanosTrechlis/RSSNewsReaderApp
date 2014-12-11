@@ -2,96 +2,62 @@ package com.romanostrechlis.rssnews;
 
 import java.util.List;
 
-import android.app.Fragment;
+import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
+import com.romanostrechlis.rssnews.content.RssFeed;
+import com.romanostrechlis.rssnews.content.RssItem;
+import com.romanostrechlis.rssnews.legacy.NodeListActivity;
+
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
-import com.romanostrechlis.rssnews.auxiliary.Helper;
-import com.romanostrechlis.rssnews.content.RssFeed;
-import com.romanostrechlis.rssnews.content.RssItem;
-
 /**
- * A fragment representing a single Node detail screen. This fragment is either
- * contained in a {@link NodeListActivity} in two-pane mode (on tablets) or a
- * {@link NodeDetailActivity} on handsets.
  * 
- * @author.comment This is auto-generated code from eclipse 
- * master/detail design pattern
+ * @author Romanos Trechlis
+ *
  */
-public class NodeDetailFragment extends Fragment {
-	/**
-	 * The fragment argument representing the item ID that this fragment
-	 * represents.
-	 */
-	public static final String ARG_ITEM_ID = "item_id";
-	DatabaseHandler db;
+public class DetailActivity extends Activity {
 
-	/**
-	 * The dummy content this fragment is presenting.
-	 */
-	private RssFeed mItem;
-
-	/**
-	 * Mandatory empty constructor for the fragment manager to instantiate the
-	 * fragment (e.g. upon screen orientation changes).
-	 */
-	public NodeDetailFragment() {
-	}
-	
-	private static final String TAG = "NodeDetailFragment";
+	private RssFeed mFeed;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		if (getArguments().containsKey(ARG_ITEM_ID)) {
-			// Load the dummy content specified by the fragment
-			// arguments. In a real-world scenario, use a Loader
-			// to load content from a content provider.
-			mItem = Helper.ITEM_MAP.get(getArguments().getString(
-					ARG_ITEM_ID));
-		}
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.fragment_node_detail,container, false);
-		Context context = getActivity();
-		// mItem.removeNew();
-		mItem.setNewContent(false);
-		db = DatabaseHandler.getInstance(context);
-		db.updateRssFeed(mItem);
-		mItem.setList(db.getFeedItems(Integer.parseInt(mItem.getId())));
-		createRSSLayout(context, rootView);
+		setContentView(R.layout.activity_node_detail);
 		
-		return rootView;
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		DatabaseHandler db = DatabaseHandler.getInstance(this);
+		mFeed = db.getRssFeed(Integer.parseInt(getIntent().getExtras().get("feedId").toString()));
+
+		mFeed.setNewContent(false);
+		db.updateRssFeed(mFeed);
+		mFeed.setList(db.getFeedItems(Integer.parseInt(mFeed.getId())));
+		createRSSLayout(this);
 	}
-	
+
 	/**
 	 * Method generates the necessary view elements so the rss feed can be viewed.
 	 * 
 	 * @param context	the current activity from {@link #getActivity()}
 	 * @param rootView	
 	 */
-	private void createRSSLayout(Context context, View rootView) {
-		final LinearLayout linear = (LinearLayout) rootView.findViewById(R.id.linearFragment);
-		if (mItem != null) {
+	private void createRSSLayout(Context context) {
+		final LinearLayout linear = (LinearLayout) findViewById(R.id.linearLayout);
+		if (mFeed != null) {
 			// getting feed from internet
 			// this line gets the feed 
 			// Content.feedContent(mItem);
-			List<RssItem> col = mItem.getList();
+			List<RssItem> col = mFeed.getList();
 			ScrollView sv = new ScrollView(context);
 			LinearLayout linearWrapper = new LinearLayout(context);
 			linearWrapper.setOrientation(LinearLayout.VERTICAL);
@@ -105,7 +71,7 @@ public class NodeDetailFragment extends Fragment {
 					// Title
 					TextView title = new TextView(context);
 					title.setTypeface(null, Typeface.BOLD);
-					
+
 					title.setTextSize(14);
 					title.setText(rf.getTitle());
 					ll.addView(title);
@@ -125,7 +91,7 @@ public class NodeDetailFragment extends Fragment {
 					String url = "<a href='" + rf.getLink() + "'>Read More</a>";
 					TextView link = new TextView(context);
 					link.setClickable(true);
-					// link.setAutoLinkMask(Linkify.WEB_URLS);
+
 					link.setMovementMethod(LinkMovementMethod.getInstance());
 					link.setText(Html.fromHtml(url));
 					// Log.d(TAG, url);
@@ -136,5 +102,23 @@ public class NodeDetailFragment extends Fragment {
 			sv.addView(linearWrapper);
 			linear.addView(sv);
 		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == android.R.id.home) {
+			// This ID represents the Home or Up button. In the case of this
+			// activity, the Up button is shown. Use NavUtils to allow users
+			// to navigate up one level in the application structure. For
+			// more details, see the Navigation pattern on Android Design:
+			//
+			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+			//
+			NavUtils.navigateUpTo(this,
+					new Intent(this, NodeListActivity.class));
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

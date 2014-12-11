@@ -1,4 +1,4 @@
-package com.romanostrechlis.rssnews;
+package com.romanostrechlis.rssnews.legacy;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.romanostrechlis.rssnews.R;
+import com.romanostrechlis.rssnews.R.id;
+import com.romanostrechlis.rssnews.R.layout;
+import com.romanostrechlis.rssnews.R.menu;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
+import com.romanostrechlis.rssnews.auxiliary.UpdateService;
 import com.romanostrechlis.rssnews.managefeeds.ManageActivity;
 import com.romanostrechlis.rssnews.managefeeds.NewFeedsActivity;
 import com.romanostrechlis.rssnews.settings.SettingsActivity;
@@ -38,9 +43,9 @@ public class NodeListActivity extends Activity implements
 NodeListFragment.Callbacks {
 
 	private Thread thread;
-	private String LOGCAT = "NodeListActivity";
+	private static final String TAG = "NodeListActivity";
 	DatabaseHandler db;
-	
+
 	/**
 	 * Whether or not the activity is in two-pane mode, i.e. running on a tablet
 	 * device.
@@ -56,9 +61,9 @@ NodeListFragment.Callbacks {
 		Context context = this;
 		if (Helper.FLAG_NEW) {
 			AssetManager assetManager = getAssets();
-			Helper.readRSS(db, assetManager, context);
+			// Helper.readRSS(db, assetManager, context);
 			Helper.FLAG_NEW = false;
-			
+
 			if (findViewById(R.id.node_detail_container) != null) {
 				// The detail container view will be present only in the
 				// large-screen layouts (res/values-large and
@@ -73,7 +78,7 @@ NodeListFragment.Callbacks {
 			}
 		}
 		// Log.d(LOGCAT, "So far so good!!!");
-		
+
 		// FIXME Add functionality on changing the order of appearance in the list.
 		while (!Helper.isConnected(this)) {
 			Toast.makeText(this, "You don't have Internet connection!", Toast.LENGTH_LONG).show();
@@ -83,13 +88,17 @@ NodeListFragment.Callbacks {
 				Toast.makeText(this, "Error" + e, Toast.LENGTH_LONG).show();
 			}
 		}
-		if (Helper.FLAG_THREAD && Helper.isConnected(this)) {
-			bcgUpdate();
-			Helper.FLAG_THREAD = false;
+
+		// correct implementation with service
+		if (UpdateService.isRunning()) {
+			Intent startService = new Intent(this, UpdateService.class);
+			Log.d(TAG, "Starting Service");
+			context.startService(startService);
 		}
+
 		// TODO: If exposing deep links into your app, handle intents here.
 	}
-	
+
 	/**
 	 * Method implements a background process that updates the rss feed content.
 	 */
@@ -130,7 +139,7 @@ NodeListFragment.Callbacks {
 			fragment.setArguments(arguments);
 			getFragmentManager().beginTransaction()
 			.replace(R.id.node_detail_container, fragment).commit();
-			
+
 
 		} else {
 			// In single-pane mode, simply start the detail activity
@@ -166,9 +175,9 @@ NodeListFragment.Callbacks {
 			startActivity(new Intent(this, ManageActivity.class));
 		} else if (id == R.id.update) {
 			Helper.downloadContent(db, getApplicationContext());
-	}
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	
+
 }

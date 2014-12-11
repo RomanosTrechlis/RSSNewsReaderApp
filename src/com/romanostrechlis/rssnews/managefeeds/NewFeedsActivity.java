@@ -11,11 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.romanostrechlis.rssnews.NodeListActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
 import com.romanostrechlis.rssnews.content.RssFeed;
+import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 /**  
 * NewFeeds class implements adding a new RSS feed to SD card.
 * 

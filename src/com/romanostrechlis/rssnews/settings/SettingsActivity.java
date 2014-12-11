@@ -1,8 +1,8 @@
 package com.romanostrechlis.rssnews.settings;
 
-import com.romanostrechlis.rssnews.NodeListActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
+import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 
 import android.app.Activity;
 import android.content.Intent;

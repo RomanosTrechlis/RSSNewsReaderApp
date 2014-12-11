@@ -1,4 +1,4 @@
-package com.romanostrechlis.rssnews;
+package com.romanostrechlis.rssnews.legacy;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.romanostrechlis.rssnews.auxiliary.Helper;
-import com.romanostrechlis.rssnews.auxiliary.MainCustomArrayAdapter;
 
 /**
  * A list fragment representing a list of Nodes. This fragment also supports

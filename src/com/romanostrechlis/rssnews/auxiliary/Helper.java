@@ -38,7 +38,7 @@ import com.romanostrechlis.rssnews.content.RssItem;
  * @author Romanos Trechlis
  */
 public class Helper {
-	
+
 	public static List<RssFeed> ITEMS = new ArrayList<RssFeed>();
 	public static Map<String, RssFeed> ITEM_MAP = new HashMap<String, RssFeed>();
 
@@ -53,25 +53,38 @@ public class Helper {
 	/** variable sets the sleep time in ms */
 	public static int INTERVAL = 60000;
 
-	// private static String LOGCAT = "Content";
+	// private static String TAG = "Content";
 
 	/** Auto-generated code. */
 	private static void addItem(RssFeed item) {
 		Helper.ITEMS.add(item);
 		Helper.ITEM_MAP.put(item.getId(), item);
 	}
-	
+
 	/**
-	 * Checks if database is populated, if it is gets all enabled RssFeed objects, 
-	 * else it opens the rssfeeds.txt file from assets and populates the database itself.
+	 * Gets all RssFeed objects from database and populates ITEMS_TOTAL and ITEM_MAP_TOTAL.
 	 * 
-	 * <p>Calls {@link #addItem(RssFeed)} which appends objects to the static ITEMS and ITEM_MAP.
-	 * Used by NodeListActivity
+	 * <p>Used by ManageActivity.
 	 * 
 	 * @param db
-	 * @param assetManager
 	 */
-	public static void readRSS(DatabaseHandler db, AssetManager assetManager, Context context) {
+	public static void readRSSAll(DatabaseHandler db) {
+		Helper.ITEMS_TOTAL.clear();
+		Helper.ITEM_MAP_TOTAL.clear();
+
+		// Taking ALL RssFeed from the database and append them to Content.ITEMS_TOTAL
+		// Log.d(LOGCAT, "Getting All RssFeed from db!!!");
+		List<RssFeed> list = db.getAllRssFeed();
+		// Log.d(LOGCAT, String.valueOf(list.size()));
+		for (RssFeed mFeed : list) {
+			// Log.d(LOGCAT, "mFeed.getEnabled(): " + String.valueOf(mFeed.getEnabled()));
+			Helper.ITEMS_TOTAL.add(mFeed);
+			Helper.ITEM_MAP_TOTAL.put(mFeed.getId(), mFeed);
+		}
+		// Log.d(LOGCAT, "ITEMS_TOTAL size: " + String.valueOf(Helper.ITEMS_TOTAL.size()));
+	}
+
+	public static void createDB(DatabaseHandler db, AssetManager assetManager, Context context) {
 		JSONObject json;
 		RssFeed feed;
 		BufferedReader br;
@@ -105,36 +118,14 @@ public class Helper {
 				Toast.makeText(context, "Error opening rssfeeds.txt", Toast.LENGTH_LONG).show();
 			}
 		}
+	}
+
+	public static void makeUpdateList(List<RssFeed> list) {
 		// Taking the enabled RssFeed from the database and append them to Content.ITEMS
-		List<RssFeed> list = db.getEnabled();
 		for (RssFeed mFeed : list) {
-			// Log.d(LOGCAT, "mFeed: " + rf.getName() + " : " + rf.getEnabled());
 			addItem(mFeed);
 		}
 		// Log.d(LOGCAT, String.valueOf(Helper.ITEMS.size()));
-	}
-
-	/**
-	 * Gets all RssFeed objects from database and populates ITEMS_TOTAL and ITEM_MAP_TOTAL.
-	 * 
-	 * <p>Used by ManageActivity.
-	 * 
-	 * @param db
-	 */
-	public static void readRSSAll(DatabaseHandler db) {
-		Helper.ITEMS_TOTAL.clear();
-		Helper.ITEM_MAP_TOTAL.clear();
-
-		// Taking ALL RssFeed from the database and append them to Content.ITEMS_TOTAL
-		// Log.d(LOGCAT, "Getting All RssFeed from db!!!");
-		List<RssFeed> list = db.getAllRssFeed();
-		// Log.d(LOGCAT, String.valueOf(list.size()));
-		for (RssFeed mFeed : list) {
-			// Log.d(LOGCAT, "mFeed.getEnabled(): " + String.valueOf(mFeed.getEnabled()));
-			Helper.ITEMS_TOTAL.add(mFeed);
-			Helper.ITEM_MAP_TOTAL.put(mFeed.getId(), mFeed);
-		}
-		// Log.d(LOGCAT, "ITEMS_TOTAL size: " + String.valueOf(Helper.ITEMS_TOTAL.size()));
 	}
 
 	/**

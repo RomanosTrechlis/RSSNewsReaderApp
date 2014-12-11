@@ -1,7 +1,18 @@
-# RSS News Reader Application for Android handheld devices v1.15
+# RSS News Reader Application for Android handheld devices v1.3
 ### This application is created for learning purposes only.
 
 ## 0. Updates!
+
+###v1.3 updates
+
++ updates using a service
++ using expandable listview to group feeds by category
++ only mobile phone support, for now
+
+not used classes inside the .legacy package
+
+
+###v1.15 updates
 
 + checks if new RSS feed's url starts with 'http://' or 'https://'
 + html parser no longer displays img, a and strong tags.
@@ -40,12 +51,11 @@ Static content is Helper.java and the communication with the servers is facilita
 
 ## 4. TODO
 
-1. Test it on a tablet.
-2. Do something with Categories (of RssFeed).
-3. Add more initial RSS feed objects.
-4. Make it prettier.
-5. Make main list of feeds redrawn after every update.
-6. Check error handling when url doesn't exists in RSS feeds.
+1. Make it prettier.
+2. Make main list of feeds redrawn after every update.
+3. Check error handling when url doesn't exists in RSS feeds.
+4. Find why ConcurrentModificationException happened
+5. Better documentation
 
 ## 5. Contact information
 *Romanos Trechlis* @r_trechlis

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Handles all transaction between the application and the SQLite database.
@@ -54,7 +55,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private static final String DATABASE_NAME = "RSSNewsDB";
 
-	// private String LOGCAT = "DatabaseHandler";
+	private String TAG = "DatabaseHandler";
 
 	/** RssFeed */
 	private static String RSS_FEED = "RssFeed";
@@ -73,7 +74,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static String DESCRIPTION = "description";
 	private static String LINK = "link";
 	private static String PARENT = "parentRssFeed";
-	
+
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -184,21 +185,36 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				new String[] { FEED_ID, NAME, URL, ENABLED, CATEGORY, NEW_CONTENT, CONTENT, HASH_CODE },
 				FEED_ID + "=?",
 				new String[] { String.valueOf(id) }, null, null, null, null);
-		
+
 		if (cursor != null)
 			cursor.moveToFirst();
-		
+
 		RssFeed feed = new RssFeed(cursor.getString(0), 					// FEED_ID: Integer
-								   cursor.getString(1), 					// NAME
-								   cursor.getString(2), 					// URL
-								   Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
-								   cursor.getString(4), 					// CATEGORY
-								   Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
-								   cursor.getString(6), 					// CONTENT
-								   Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
+				cursor.getString(1), 					// NAME
+				cursor.getString(2), 					// URL
+				Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
+				cursor.getString(4), 					// CATEGORY
+				Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
+				cursor.getString(6), 					// CONTENT
+				Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
 		// cursor.close();
 		return feed;
 	}
+
+
+	public List<String> getCategories() {
+		SQLiteDatabase db = this.getReadableDatabase();
+		String selectQuery = "SELECT distinct " + CATEGORY + " FROM " + RSS_FEED;
+		Cursor cursor = db.rawQuery(selectQuery, null);
+		List<String> list = new ArrayList<String>();
+		if (cursor.moveToFirst()) {
+			do {
+				list.add(cursor.getString(0));
+			} while (cursor.moveToNext());
+		}
+		return list;
+	}
+
 
 	/**
 	 * Gets all RssFeed objects with enabled column equal to true.
@@ -218,18 +234,45 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do {
 				RssFeed feed = new RssFeed(cursor.getString(0), 					// FEED_ID: Integer
-										   cursor.getString(1), 					// NAME
-										   cursor.getString(2), 					// URL
-										   Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
-										   cursor.getString(4), 					// CATEGORY
-										   Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
-										   cursor.getString(6), 					// CONTENT
-										   Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
+						cursor.getString(1), 					// NAME
+						cursor.getString(2), 					// URL
+						Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
+						cursor.getString(4), 					// CATEGORY
+						Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
+						cursor.getString(6), 					// CONTENT
+						Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
 				rssEnabledList.add(feed);
 			} while (cursor.moveToNext());
 		}
 		// cursor.close(); 
 		return rssEnabledList;
+	}
+
+	public List<RssFeed> getEnabledByCategory(String category) {
+		List<RssFeed> list = new ArrayList<RssFeed>();
+		String selectQuery = "SELECT * FROM " + RSS_FEED + " WHERE " + CATEGORY + " = ? AND " + ENABLED + " = ?";
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		String[] selectionArgs = {category, "true"};
+		Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
+		Log.d(TAG, "db.getByCategory()");
+		// looping through all rows and adding to list
+		if (cursor.moveToFirst()) {
+			do {
+				Log.d(TAG, cursor.toString());
+				RssFeed feed = new RssFeed(cursor.getString(0), // FEED_ID: Integer
+						cursor.getString(1), 					// NAME
+						cursor.getString(2), 					// URL
+						Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
+						cursor.getString(4), 					// CATEGORY
+						Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
+						cursor.getString(6), 					// CONTENT
+						Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
+				list.add(feed);
+			} while (cursor.moveToNext());
+		}
+
+		return list;
 	}
 
 	/**
@@ -250,14 +293,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do {
 				RssFeed feed = new RssFeed(cursor.getString(0), 					// FEED_ID: Integer
-										   cursor.getString(1), 					// NAME
-										   cursor.getString(2), 					// URL
-										   Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
-										   cursor.getString(4), 					// CATEGORY
-										   Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
-										   cursor.getString(6), 					// CONTENT
-										   Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
-				
+						cursor.getString(1), 					// NAME
+						cursor.getString(2), 					// URL
+						Boolean.valueOf(cursor.getString(3)), 	// ENABLED: Boolean
+						cursor.getString(4), 					// CATEGORY
+						Boolean.valueOf(cursor.getString(5)), 	// NEW_CONTENT: Boolean
+						cursor.getString(6), 					// CONTENT
+						Integer.parseInt(cursor.getString(7)));	// HASH_CODE: Integer
+
 				rssEnabledList.add(feed);
 			} while (cursor.moveToNext());
 		}
@@ -284,10 +327,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 			do { 
 				RssItem item = new RssItem(cursor.getString(0), 					// ITEM_ID: Integer
-										   cursor.getString(1), 					// TITLE
-										   cursor.getString(2), 					// DESCRIPTION
-										   cursor.getString(3),						// LINK
-										   cursor.getString(4));				 	// PARENT
+						cursor.getString(1), 					// TITLE
+						cursor.getString(2), 					// DESCRIPTION
+						cursor.getString(3),						// LINK
+						cursor.getString(4));				 	// PARENT
 
 				rssEnabledList.add(item);
 			} while (cursor.moveToNext());

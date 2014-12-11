@@ -3,6 +3,15 @@
     android:id="@+id/node_detail_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.romanostrechlis.rssnews.NodeDetailActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:context="com.romanostrechlis.rssnews.legacy.NodeDetailActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+</FrameLayout>
 

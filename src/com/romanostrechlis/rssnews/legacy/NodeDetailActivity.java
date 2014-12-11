@@ -1,4 +1,8 @@
-package com.romanostrechlis.rssnews;
+package com.romanostrechlis.rssnews.legacy;
+
+import com.romanostrechlis.rssnews.R;
+import com.romanostrechlis.rssnews.R.id;
+import com.romanostrechlis.rssnews.R.layout;
 
 import android.app.Activity;
 import android.content.Intent;
