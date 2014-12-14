@@ -1,7 +1,11 @@
-# RSS News Reader Application for Android handheld devices v1.3
+# RSS News Reader Application for Android handheld devices v1.4
 ### This application is created for learning purposes only.
 
 ## 0. Updates!
+
+###v1.4 updates
+
++ using SharedPreferences to store and retrieve the update interval
 
 ###v1.3 updates
 
@@ -54,7 +58,7 @@ Static content is Helper.java and the communication with the servers is facilita
 1. Make it prettier.
 2. Make main list of feeds redrawn after every update.
 3. Check error handling when url doesn't exists in RSS feeds.
-4. Find why ConcurrentModificationException happened
+4. Find why ConcurrentModificationException between downloadContent() and UpdateService.run() happened
 
 ## 5. Contact information
 *Romanos Trechlis* @r_trechlis

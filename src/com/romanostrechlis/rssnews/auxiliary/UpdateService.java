@@ -56,7 +56,7 @@ public class UpdateService extends Service {
 					while(true) {
 						Helper.downloadContent(db, getApplicationContext());
 						// Log.d(TAG, String.valueOf(Thread.activeCount()));
-						Thread.sleep(Helper.INTERVAL);
+						Thread.sleep(Helper.getUpdateInterval(getApplicationContext()));
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();

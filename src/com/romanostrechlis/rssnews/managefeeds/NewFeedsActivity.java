@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.romanostrechlis.rssnews.MainActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
@@ -66,7 +67,7 @@ public class NewFeedsActivity extends Activity {
 					etName.setText("");
 					etUrl.setText("");
 					etCategory.setText("");
-					Helper.FLAG_NEW = true;
+					// Helper.FLAG_NEW = true;
 				} else
 					Toast.makeText(NewFeedsActivity.this, "Faillure", Toast.LENGTH_LONG).show();
 			}
@@ -84,7 +85,7 @@ public class NewFeedsActivity extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpTo(this,
-					new Intent(this, NodeListActivity.class));
+					new Intent(this, MainActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

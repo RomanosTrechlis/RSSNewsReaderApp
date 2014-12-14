@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.romanostrechlis.rssnews.MainActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
@@ -88,9 +89,9 @@ public class ManageActivity extends Activity{
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == android.R.id.home) {
-			Helper.FLAG_NEW = true; // for when there is a permanent change in visibility
+			// Helper.FLAG_NEW = true; // for when there is a permanent change in visibility
 			NavUtils.navigateUpTo(this,
-					new Intent(this, NodeListActivity.class));
+					new Intent(this, MainActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

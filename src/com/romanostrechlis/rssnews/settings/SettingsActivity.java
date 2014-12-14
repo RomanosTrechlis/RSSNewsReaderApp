@@ -31,12 +31,12 @@ public class SettingsActivity extends Activity {
 		NumberPicker npInterval = (NumberPicker)findViewById(R.id.npUpdateInterval);
 		npInterval.setMaxValue(60);
 		npInterval.setMinValue(1);
-		npInterval.setValue(Helper.INTERVAL/60000);
+		npInterval.setValue(Helper.getUpdateInterval(this)/60000);
 		npInterval.setOnValueChangedListener(new OnValueChangeListener() {
 			
 			@Override
 			public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-				Helper.INTERVAL = newVal*60000; /** Sets new interval */
+				Helper.setUpdateInterval(SettingsActivity.this, newVal * 60000); /** Sets new interval */
 			}
 		});
 	}

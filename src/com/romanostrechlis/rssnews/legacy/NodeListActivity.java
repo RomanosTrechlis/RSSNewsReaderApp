@@ -60,10 +60,11 @@ NodeListFragment.Callbacks {
 		// Log.d(LOGCAT, "onCreate");
 		db = DatabaseHandler.getInstance(this);
 		Context context = this;
-		if (Helper.FLAG_NEW) {
+		// code changed, Flags in helper class are extinct.
+		if (true) {//Helper.FLAG_NEW) {
 			AssetManager assetManager = getAssets();
 			// Helper.readRSS(db, assetManager, context);
-			Helper.FLAG_NEW = false;
+			// Helper.FLAG_NEW = false;
 
 			if (findViewById(R.id.node_detail_container) != null) {
 				// The detail container view will be present only in the
@@ -114,7 +115,7 @@ NodeListFragment.Callbacks {
 					while(true) {
 						Helper.downloadContent(db, getApplicationContext());
 						//Log.d(LOGCAT, String.valueOf(Thread.activeCount()));
-						Thread.sleep(Helper.INTERVAL);
+						Thread.sleep(60000);//Helper.INTERVAL);
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();

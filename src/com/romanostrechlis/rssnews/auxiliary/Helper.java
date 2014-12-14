@@ -15,9 +15,12 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.AssetManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.romanostrechlis.rssnews.content.RssFeed;
@@ -34,6 +37,8 @@ import com.romanostrechlis.rssnews.content.RssItem;
  * <li>{@link $makeUpdateList(List): populates the {@link #ITEMS} List for update purposes.</li>
  * <li>{@link #downloadContent(DatabaseHandler)}: downloads the content from the web and parse it into RssItem objects.</li>
  * <li>{@link #isConnected(Activity)}: checks whether application has Internet connection.</li>
+ * <li>{@link #getUpdateInterval(Context)}: retrieves the number of milliseconds that the UpdateService sleeps.</li>
+ * <li>{@link #setUpdateInterval(Context, int)}: sets the new interval that the UpdateService should sleep.</li>
  * </ul>
  * 
  * @author Romanos Trechlis
@@ -46,15 +51,38 @@ public class Helper {
 	public static List<RssFeed> ITEMS_TOTAL = new ArrayList<RssFeed>();
 	public static Map<String, RssFeed> ITEM_MAP_TOTAL = new HashMap<String, RssFeed>();
 
-	/** variable used to turn off the creation of new thread after it is created. */
-	public static Boolean FLAG_THREAD = true;
-	public static Boolean FLAG_NEW = true;
-	public static Boolean FLAG_MANAGE = false;
-
 	/** variable sets the sleep time in ms */
-	public static int INTERVAL = 60000;
-
-	// private static String TAG = "Content";
+	public static String PREFERENCES = "AppPreferences";
+	private static SharedPreferences sharedPreferences;
+	private static int DEF_INTERVAL = 60000; // 1min
+	
+	/**
+	 * Retrieves the number of milliseconds that the UpdateService sleeps.
+	 * 
+	 * @param context
+	 * @return number of milliseconds to sleep before the next update
+	 */
+	public static int getUpdateInterval(Context context) {
+		sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+		int interval = sharedPreferences.getInt("UpdateInterval", DEF_INTERVAL);
+		Log.d(TAG, "New Interval: " + interval);
+		return interval;
+	}
+	
+	/**
+	 * Sets the new interval that the UpdateService should sleep.
+	 * 
+	 * @param context
+	 * @param newInterval
+	 */
+	public static void setUpdateInterval(Context context, int newInterval) {
+		sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
+		Editor editor = sharedPreferences.edit();
+		editor.putInt("UpdateInterval", newInterval);
+		editor.commit();
+		Log.d(TAG, "New Interval: " + getUpdateInterval(context));
+	}
+	private static final String TAG = "Content";
 
 	/** Auto-generated code. */
 	private static void addItem(RssFeed item) {
