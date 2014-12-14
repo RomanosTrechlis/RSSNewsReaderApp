@@ -38,7 +38,7 @@ public class DetailActivity extends Activity {
 		
 		DatabaseHandler db = DatabaseHandler.getInstance(this);
 		mFeed = db.getRssFeed(Integer.parseInt(getIntent().getExtras().get("feedId").toString()));
-
+		
 		mFeed.setNewContent(false);
 		db.updateRssFeed(mFeed);
 		mFeed.setList(db.getFeedItems(Integer.parseInt(mFeed.getId())));
@@ -115,8 +115,8 @@ public class DetailActivity extends Activity {
 			//
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
-			NavUtils.navigateUpTo(this,
-					new Intent(this, MainActivity.class));
+			Intent intent = new Intent(this, MainActivity.class);
+			NavUtils.navigateUpTo(this, intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

@@ -84,8 +84,13 @@ public class Helper {
 		editor.commit();
 		// Log.d(TAG, "New Interval: " + getUpdateInterval(context));
 	}
+	
 	private static final String TAG = "Content";
 
+	private static int savedGroupPosition;
+	public static void setSavedGroupPosition(int groupPosition) { savedGroupPosition = groupPosition; }
+	public static int getSavedGroupPostion() { return savedGroupPosition; }
+	
 	/** Auto-generated code. */
 	private static void addItem(RssFeed item) {
 		Helper.ITEMS.add(item);

@@ -1,13 +1,14 @@
 # RSS News Reader Application for Android handheld devices v1.4
 ### This application is created for learning purposes only.
 
-## 0. Updates!
+## 0. Update Log
 
 ###v1.4 updates
 
 + ConcurrentModificationException fixed
-+ invalid RSS url error fixed
++ invalid RSS URL error fixed
 + using SharedPreferences to store and retrieve the update interval
++ ExtendableListView remembers last expanded group
 
 ###v1.3 updates
 
@@ -42,8 +43,8 @@ This application was my introduction to the world of Android devices programming
 ## 3. Design
 The application consists of several activities:
 
-1. The main activity is an auto-generated master-detail design pattern.
-2. ManageActivity, NewsFeedActivity, SettingsActivity are simple activities, children of the first.
+1. The MainActivity draws an extendable list view of RSS feeds and the DetailsActivity draws the RSS items held by the selected RSS feed.
+2. ManageActivity, NewsFeedActivity, SettingsActivity are simple activities, children of the MainActivity.
 
 The application contains two model classes:
 
@@ -54,12 +55,14 @@ On the background an SQLite database is running with the help of DatabaseHanlder
 
 Static content is Helper.java and the communication with the servers is facilitated with the RetrieveFeedTask.java
 
+Lastly a Service (UpdateService.java) is implemented to facilitate the update schedule.
+
 
 ## 4. TODO
 
 1. Make it prettier.
 2. Make main list of feeds redrawn after every update.
-3. Make main list retain the extended items as they are.
+3. Add more RSS feeds at initialization.
 
 ## 5. Contact information
 *Romanos Trechlis* @r_trechlis

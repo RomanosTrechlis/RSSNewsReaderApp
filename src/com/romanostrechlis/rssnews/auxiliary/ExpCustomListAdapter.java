@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -81,7 +82,6 @@ public class ExpCustomListAdapter extends BaseExpandableListAdapter {
 		CheckedTextView ctv = (CheckedTextView)convertView.findViewById(R.id.ctv1);
 		ctv.setText(parentItems.get(groupPosition));
 		ctv.setChecked(isExpanded);
-
 		return convertView;
 	}
 

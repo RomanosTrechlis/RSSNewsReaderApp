@@ -7,5 +7,7 @@
     <string name="new_feed">Add New RSS Feed</string>
     <string name="manage_rss">Manage RSS Feeds</string>
     <string name="update">Update</string>
+    <string name="up_interval">Set update interval</string>
+    <string name="time_min">minutes</string>
 
 </resources>

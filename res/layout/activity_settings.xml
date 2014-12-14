@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set update interval"
+        android:text="@string/up_interval"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
@@ -22,12 +23,12 @@
             android:layout_height="wrap_content"
              />
         
-        <TextView 
+        <TextView
             android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="minutes"
-        	android:textAppearance="?android:attr/textAppearanceLarge"
-        	android:layout_marginTop="50dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/time_min"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
         
     </LinearLayout>
 
