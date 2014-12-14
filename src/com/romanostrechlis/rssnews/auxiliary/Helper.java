@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.json.JSONException;
@@ -45,8 +47,8 @@ import com.romanostrechlis.rssnews.content.RssItem;
  */
 public class Helper {
 
-	public static List<RssFeed> ITEMS = new ArrayList<RssFeed>();
-	public static Map<String, RssFeed> ITEM_MAP = new HashMap<String, RssFeed>();
+	public static List<RssFeed> ITEMS = new CopyOnWriteArrayList<RssFeed>(); //new ArrayList<RssFeed>();
+	public static Map<String, RssFeed> ITEM_MAP = new ConcurrentHashMap<String, RssFeed>(); //new HashMap<String, RssFeed>();
 
 	public static List<RssFeed> ITEMS_TOTAL = new ArrayList<RssFeed>();
 	public static Map<String, RssFeed> ITEM_MAP_TOTAL = new HashMap<String, RssFeed>();
@@ -65,7 +67,7 @@ public class Helper {
 	public static int getUpdateInterval(Context context) {
 		sharedPreferences = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE);
 		int interval = sharedPreferences.getInt("UpdateInterval", DEF_INTERVAL);
-		Log.d(TAG, "New Interval: " + interval);
+		// Log.d(TAG, "New Interval: " + interval);
 		return interval;
 	}
 	
@@ -80,7 +82,7 @@ public class Helper {
 		Editor editor = sharedPreferences.edit();
 		editor.putInt("UpdateInterval", newInterval);
 		editor.commit();
-		Log.d(TAG, "New Interval: " + getUpdateInterval(context));
+		// Log.d(TAG, "New Interval: " + getUpdateInterval(context));
 	}
 	private static final String TAG = "Content";
 
@@ -194,27 +196,29 @@ public class Helper {
 	}
 
 	/**
-	 * Called by {@link #downloadContent(DatabaseHandler)}.
+	 * Update individual RssFeed.
 	 * 
 	 * @param db
+	 * @return true 	if update was successful
 	 */
-	private static void feedContent(RssFeed mFeed, DatabaseHandler db, Context context) {
+	public static Boolean downloadFeedContent(RssFeed mFeed, DatabaseHandler db, Context context) {
 		String data = null;
 		// Log.d(LOGCAT, "We 've got so far!!!");
 		RetrieveFeedTask rft = new RetrieveFeedTask();
 		rft.execute(mFeed.getUrl());
 		try {
 			data = rft.get();
+			mFeed.setContent(data);
+			db.updateRssFeed(mFeed);
+			mFeed.parseXML();
+			for (RssItem ri : mFeed.getList()) {
+				db.addRssItem(ri);
+			}
+			return true;
 		} catch (InterruptedException | ExecutionException e) {
 			Toast.makeText(context, "Error" + e, Toast.LENGTH_LONG).show();
-			e.printStackTrace();
+			return false;
 		} 
-		mFeed.setContent(data);
-		db.updateRssFeed(mFeed);
-		mFeed.parseXML();
-		for (RssItem ri : mFeed.getList()) {
-			db.addRssItem(ri);
-		}
 	}
 
 	/** 
@@ -226,7 +230,30 @@ public class Helper {
 	public static void downloadContent(DatabaseHandler db, Context context) {
 		db.dropRssItemTable();
 		for (RssFeed mFeed : ITEMS) {
-			Helper.feedContent(mFeed, db, context);
+			Helper.downloadFeedContent(mFeed, db, context);
 		}
+	}
+	
+	/**
+	 * Called only by NewFeedsActivity.
+	 * 
+	 * @param db
+	 * @return true 	if update was successful
+	 */
+	public static Boolean checkDownloadFeedContent(RssFeed mFeed, DatabaseHandler db, Context context) {
+		String data = null;
+		// Log.d(LOGCAT, "We 've got so far!!!");
+		RetrieveFeedTask rft = new RetrieveFeedTask();
+		rft.execute(mFeed.getUrl());
+		try {
+			data = rft.get();
+			if (data != null)
+				return true;
+			else 
+				return false;
+		} catch (InterruptedException | ExecutionException e) {
+			Toast.makeText(context, "Error" + e, Toast.LENGTH_LONG).show();
+			return false;
+		} 
 	}
 }

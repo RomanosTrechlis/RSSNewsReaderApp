@@ -18,7 +18,6 @@ import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
 import com.romanostrechlis.rssnews.auxiliary.ManageCustomArrayAdapter;
 import com.romanostrechlis.rssnews.content.RssFeed;
-import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 
 /**
  * Shows {@link ListView} with all the RssFeed objects in the database,

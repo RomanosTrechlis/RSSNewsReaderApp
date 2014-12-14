@@ -5,6 +5,8 @@
 
 ###v1.4 updates
 
++ ConcurrentModificationException fixed
++ invalid RSS url error fixed
 + using SharedPreferences to store and retrieve the update interval
 
 ###v1.3 updates
@@ -57,8 +59,7 @@ Static content is Helper.java and the communication with the servers is facilita
 
 1. Make it prettier.
 2. Make main list of feeds redrawn after every update.
-3. Check error handling when url doesn't exists in RSS feeds.
-4. Find why ConcurrentModificationException between downloadContent() and UpdateService.run() happened
+3. Make main list retain the extended items as they are.
 
 ## 5. Contact information
 *Romanos Trechlis* @r_trechlis

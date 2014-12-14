@@ -5,7 +5,6 @@ import java.util.List;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.content.RssFeed;
 import com.romanostrechlis.rssnews.content.RssItem;
-import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -117,7 +116,7 @@ public class DetailActivity extends Activity {
 			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
 			//
 			NavUtils.navigateUpTo(this,
-					new Intent(this, NodeListActivity.class));
+					new Intent(this, MainActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

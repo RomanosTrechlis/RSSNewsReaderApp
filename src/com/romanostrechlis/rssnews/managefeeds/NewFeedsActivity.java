@@ -16,37 +16,36 @@ import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.DatabaseHandler;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
 import com.romanostrechlis.rssnews.content.RssFeed;
-import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 /**  
-* NewFeeds class implements adding a new RSS feed to SD card.
-* 
-* <p>It takes the name, the url and the category from user and
-* saves it to {@link #getAbsolutePath()}/rssnews/customFeeds.dat
-* 
-* @author Romanos Trechlis
-* @version 0.1v Noe 18, 2014.
-*/
+ * NewFeeds class implements adding a new RSS feed to SD card.
+ * 
+ * <p>It takes the name, the url and the category from user and
+ * saves it to {@link #getAbsolutePath()}/rssnews/customFeeds.dat
+ * 
+ * @author Romanos Trechlis
+ * @version 0.1v Noe 18, 2014.
+ */
 public class NewFeedsActivity extends Activity {
 	EditText etName;
 	EditText etUrl;
 	EditText etCategory;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_newfeeds);
 		// Show the Up button in the action bar.
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
 		etName = (EditText) findViewById(R.id.etName);
 		etUrl = (EditText) findViewById(R.id.etUrl);
 		etCategory = (EditText) findViewById(R.id.etCategory);
-		
-		
-		
+
+
+
 		Button btnAdd = (Button) findViewById(R.id.btnAddFeed);
 		btnAdd.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				DatabaseHandler db = DatabaseHandler.getInstance(NewFeedsActivity.this);
@@ -60,20 +59,24 @@ public class NewFeedsActivity extends Activity {
 				mFeed.setUrl(url);
 				mFeed.setCategory(etCategory.getText().toString());
 				mFeed.setContent("");
-				Boolean status = Helper.addItemFeed(db, mFeed);
-				
-				if (status) {
-					Toast.makeText(NewFeedsActivity.this, "Success", Toast.LENGTH_LONG).show();
-					etName.setText("");
-					etUrl.setText("");
-					etCategory.setText("");
+				Boolean statusDownload = Helper.checkDownloadFeedContent(mFeed, db, getApplicationContext());
+
+				if (statusDownload) {
+					Boolean statusDBCommit = Helper.addItemFeed(db, mFeed);
+					if (statusDBCommit) {
+						Toast.makeText(NewFeedsActivity.this, "Success", Toast.LENGTH_LONG).show();
+						etName.setText("");
+						etUrl.setText("");
+						etCategory.setText("");
+					} else 
+						Toast.makeText(NewFeedsActivity.this, "Faillure: RSS did't commit to database!!!", Toast.LENGTH_LONG).show();
 					// Helper.FLAG_NEW = true;
 				} else
-					Toast.makeText(NewFeedsActivity.this, "Faillure", Toast.LENGTH_LONG).show();
+					Toast.makeText(NewFeedsActivity.this, "Faillure: Re-check the RSS URL!!!", Toast.LENGTH_LONG).show();
 			}
 		});
 	}
-	
+
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == android.R.id.home) {

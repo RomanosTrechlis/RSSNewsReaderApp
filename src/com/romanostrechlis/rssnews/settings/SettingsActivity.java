@@ -1,8 +1,8 @@
 package com.romanostrechlis.rssnews.settings;
 
+import com.romanostrechlis.rssnews.MainActivity;
 import com.romanostrechlis.rssnews.R;
 import com.romanostrechlis.rssnews.auxiliary.Helper;
-import com.romanostrechlis.rssnews.legacy.NodeListActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -52,7 +52,7 @@ public class SettingsActivity extends Activity {
 		int id = item.getItemId();
 		if (id == android.R.id.home) {
 			NavUtils.navigateUpTo(this,
-					new Intent(this, NodeListActivity.class));
+					new Intent(this, MainActivity.class));
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

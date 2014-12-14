@@ -32,7 +32,7 @@ import android.util.Log;
  * <li>{@link #getInstance(Context)}: Returns an instance of DatabaseHandler.</li>
  * <li>{@link #getFeedItems(int)}: Returns all RssItem objects with given parent id.</li>
  * <li>{@link #getEnabledByCategory(String)}: Returns a list of RssFeed objects where enabled is true and category is given.</li>
- * <li>{@link #getCategories()}: Rerurns a list of String with distinct categories.</li>
+ * <li>{@link #getCategories()}: Returns a list of String with distinct categories.</li>
  * </ul>
  * 
  * @author Romanos Trechlis

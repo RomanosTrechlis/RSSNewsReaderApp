@@ -3,7 +3,6 @@ package com.romanostrechlis.rssnews.auxiliary;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
 
 /**
  * Custom Service to handle the update process.
