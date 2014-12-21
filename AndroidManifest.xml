@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.romanostrechlis.rssnews"
     android:versionCode="1"
-    android:versionName="1.4" >
+    android:versionName="1.5" >
 
     <uses-sdk
         android:minSdkVersion="16"
@@ -29,6 +29,7 @@
         </activity>
         <activity android:name=".managefeeds.NewFeedsActivity"></activity>
         <activity android:name=".managefeeds.ManageActivity"></activity>
+        <activity android:name=".managefeeds.EditRssFeedActivity"></activity>
         <activity android:name=".settings.SettingsActivity"></activity>
         <activity android:name=".DetailActivity"></activity>
         

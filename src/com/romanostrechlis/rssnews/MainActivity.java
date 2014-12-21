@@ -55,6 +55,7 @@ public class MainActivity extends Activity {
 
 		db = DatabaseHandler.getInstance(this);
 		Helper.createDB(db, this.getAssets(), this);
+		
 		setGroupParents();
 		setChildData();
 
@@ -73,6 +74,11 @@ public class MainActivity extends Activity {
 			// Log.d(TAG, "Starting Service");
 			this.startService(startService);
 		}
+		
+		drawExpListOnScreen();
+	}
+	
+	public void drawExpListOnScreen() {
 
 		adapter = new ExpCustomListAdapter(listParents, childItems, this);
 		expListView.setAdapter(adapter);
@@ -105,6 +111,7 @@ public class MainActivity extends Activity {
 		    }
 		    
 		});
+
 	}
 
 	@Override

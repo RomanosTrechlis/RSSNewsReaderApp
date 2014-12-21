@@ -4,8 +4,11 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -22,6 +25,9 @@ public class ManageCustomArrayAdapter extends ArrayAdapter<RssFeed> {
 
 	private final Context context;
 	private final List<RssFeed> objects;
+	
+	private static final String TAG = "ManageCustomArrayAdapter";
+	private float mLastX;
 	
 	public ManageCustomArrayAdapter(Context context, int resource, List<RssFeed> objects) {
 		super(context, resource, objects);
@@ -50,7 +56,5 @@ public class ManageCustomArrayAdapter extends ArrayAdapter<RssFeed> {
 
 		return rowView;
 	}
-
-
 
 }

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -61,7 +62,7 @@ public class DetailActivity extends Activity {
 			ScrollView sv = new ScrollView(context);
 			LinearLayout linearWrapper = new LinearLayout(context);
 			linearWrapper.setOrientation(LinearLayout.VERTICAL);
-			linearWrapper.setPadding(10, 0, 0, 10);
+			linearWrapper.setPadding(10, 0, 10, 0);
 			if (!col.isEmpty()) {
 				for (int i = 0; i < col.size(); i++) {
 					final RssItem rf = col.get(i);
@@ -78,20 +79,24 @@ public class DetailActivity extends Activity {
 					// Description
 					TextView description = new TextView(context);
 					description.setTextSize(12);
-					String htmlNoImg = "", htmlNoA = "", htmlNoStrong = "";
+					String htmlNoImg = "", htmlNoA = "", htmlNoStrong = "", htmlNoHeaders = "";
 					htmlNoImg = rf.getDescription().replaceAll("</?img[^>]*?>", "").replaceAll("<img[^>]*?>.*?</img[^>]*?>", "");
 					htmlNoA = htmlNoImg.replaceAll("</?a[^>]*?>", "").replaceAll("<a[^>]*?>.*?</a[^>]*?>", "");
 					htmlNoStrong = htmlNoA.replaceAll("</?strong[^>]*?>", "");
+					// there is no reason for h1/h2/h3 tags to exist inside the description
+					htmlNoHeaders = htmlNoStrong.replaceAll("</?h1[^>]*?>", "").replaceAll("<h1[^>]*?>.*?</h1[^>]*?>", "");
+					htmlNoHeaders = htmlNoHeaders.replaceAll("</?h2[^>]*?>", "").replaceAll("<h2[^>]*?>.*?</h2[^>]*?>", "");
+					htmlNoHeaders = htmlNoHeaders.replaceAll("</?h3[^>]*?>", "").replaceAll("<h3[^>]*?>.*?</h3[^>]*?>", "");
 					// Check regex: http://www.regexplanet.com/advanced/java/index.html
 					// Log.d(TAG, htmlNoA);
-					description.setText(Html.fromHtml(htmlNoStrong));
+					description.setText(Html.fromHtml(htmlNoHeaders));
 					ll.addView(description);
 
 					// Link
 					String url = "<a href='" + rf.getLink() + "'>Read More</a>";
 					TextView link = new TextView(context);
 					link.setClickable(true);
-
+					link.setGravity(Gravity.END);
 					link.setMovementMethod(LinkMovementMethod.getInstance());
 					link.setText(Html.fromHtml(url));
 					// Log.d(TAG, url);

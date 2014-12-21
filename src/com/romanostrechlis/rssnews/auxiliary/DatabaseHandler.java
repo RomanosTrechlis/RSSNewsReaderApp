@@ -86,6 +86,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		
 		/** RSS ITEM */
 		String CREATE_RSS_ITEM_TABLE = "CREATE TABLE " + RSS_ITEM + "("
 				+ ITEM_ID + " INTEGER PRIMARY KEY," 
@@ -107,7 +108,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ CONTENT + " TEXT," 
 				+ HASH_CODE + " INTEGER" + ")";
 		db.execSQL(CREATE_RSS_FEED_TABLE);
+
 	}
+
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -206,9 +209,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	public List<String> getCategories() {
 		SQLiteDatabase db = this.getReadableDatabase();
-		String selectQuery = "SELECT distinct " + CATEGORY + " FROM " + RSS_FEED;
-		Cursor cursor = db.rawQuery(selectQuery, null);
+		String selectQuery = "SELECT distinct " + CATEGORY + " FROM " + RSS_FEED + " WHERE " + ENABLED + " = ?";
+		String[] selectionArgs = {"true"};
+		Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
 		List<String> list = new ArrayList<String>();
+		
 		if (cursor.moveToFirst()) {
 			do {
 				list.add(cursor.getString(0));
@@ -255,7 +260,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		List<RssFeed> list = new ArrayList<RssFeed>();
 		String selectQuery = "SELECT * FROM " + RSS_FEED + " WHERE " + CATEGORY + " = ? AND " + ENABLED + " = ?";
 		SQLiteDatabase db = this.getWritableDatabase();
-		
+
 		String[] selectionArgs = {category, "true"};
 		Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
 		// Log.d(TAG, "db.getByCategory()");
@@ -362,17 +367,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	// Deleting single RssFeed
-	private void deleteRssFeed(RssFeed feed) {
+	public void deleteRssFeed(RssFeed feed) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.delete(RSS_FEED, FEED_ID + " = ?",
 				new String[] { String.valueOf(feed.getId()) });
-	}
-
-	// Deleting single RssItem
-	private void deleteRssItem(RssItem item) {
-		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(RSS_ITEM, ITEM_ID + " = ?",
-				new String[] { String.valueOf(item.getId()) });
 	}
 
 	// Getting RssItem Count

@@ -9,5 +9,7 @@
     <string name="update">Update</string>
     <string name="up_interval">Set update interval</string>
     <string name="time_min">minutes</string>
+    <string name="saveChange">Save Changes</string>
+    <string name="delete">Delete</string>
 
 </resources>
