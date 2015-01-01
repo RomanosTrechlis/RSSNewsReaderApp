@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +82,7 @@ public class ExpCustomListAdapter extends BaseExpandableListAdapter {
 			convertView = inflater.inflate(R.layout.layout_parents, parent, false);
 		}
 		CheckedTextView ctv = (CheckedTextView)convertView.findViewById(R.id.ctv1);
+		ctv.setTextColor(Color.parseColor("#f5f5f5"));
 		ctv.setText(parentItems.get(groupPosition));
 		ctv.setChecked(isExpanded);
 		return convertView;
@@ -99,12 +102,14 @@ public class ExpCustomListAdapter extends BaseExpandableListAdapter {
 		}
 
 		TextView tvExpLabel = (TextView) convertView.findViewById(R.id.tvExpLabel);
+		tvExpLabel.setTextColor(Color.WHITE);
 		ImageView ivExpIcon = (ImageView) convertView.findViewById(R.id.ivExpIcon);
 		tvExpLabel.setText(childText);
 		if (feed.getNewContent()) {
-			ivExpIcon.setImageResource(android.R.drawable.button_onoff_indicator_on);
+			// ivExpIcon.setImageResource(android.R.drawable.button_onoff_indicator_on);
+			ivExpIcon.setImageResource(R.drawable.ic_new_style);
 		} else {
-			ivExpIcon.setImageResource(android.R.drawable.button_onoff_indicator_off);
+			// ivExpIcon.setImageResource(android.R.drawable.button_onoff_indicator_off);
 		}
 		
 		return convertView;
